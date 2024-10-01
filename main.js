@@ -1,9 +1,9 @@
 // Constants
-const NUMBER_OF_BOIDS = 3000;
-const SPEED = 4;
-const MAX_TURN_RATE = 0.05;
-const NEARBY_DISTANCE = 200;
-const SEPARATION_DISTANCE = 30;
+const NUMBER_OF_BOIDS = 1000;
+const SPEED = 5;
+const MAX_TURN_RATE = 0.1;
+const NEARBY_DISTANCE = 300;
+const SEPARATION_DISTANCE = 50;
 const LENGTH = 10;
 const WIDTH = 10;
 const BOUNDS = {
@@ -141,13 +141,19 @@ class SpatialHash {
 }
 
 function init() {
+    console.log("Running init")
+
+    const button = document.getElementById('start');
+    // Hide button
+    button.style.display = 'none';
+
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
 
-    const boids = Array.from({ length: NUMBER_OF_BOIDS }, () => new Boid());
+    const boids = Array.from({ length: NUMBER_OF_BOIDS }, () => new Boid(BOUNDS.x.max / 2, BOUNDS.y.max / 2));
     const spatialHash = new SpatialHash(NEARBY_DISTANCE);
 
     function animate() {
@@ -186,4 +192,10 @@ function init() {
     animate();
 }
 
+function listenToButton() {
+    const button = document.getElementById('start');
+    button.addEventListener('click', init);
+}
+
+//window.onload = listenToButton;
 window.onload = init;
